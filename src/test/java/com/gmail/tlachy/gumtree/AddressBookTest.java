@@ -1,5 +1,6 @@
 package com.gmail.tlachy.gumtree;
 
+import com.gmail.tlachy.gumtree.model.Record;
 import com.gmail.tlachy.gumtree.model.enums.Gender;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -64,6 +65,15 @@ public class AddressBookTest {
 
     @Test
     public void testHowManyDaysOlderIsBillThanPaul() {
-        fail();
+
+        IAddressBook addressBook = new AddressBook();
+
+        //let's pretend name is unique
+        Record paul = addressBook.getRecords(r -> r.getName().equals("Paul Robinson")).get(0);
+        Record bill = addressBook.getRecords(r -> r.getName().equals("Bill McKnight")).get(0);
+
+        assertEquals(
+                addressBook.getDiffInDaysBetweenBirths(paul, bill),
+                30);
     }
 }

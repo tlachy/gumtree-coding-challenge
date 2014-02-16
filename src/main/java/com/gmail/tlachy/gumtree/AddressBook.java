@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 
 public class AddressBook implements IAddressBook {
+
 
     private final List<Record> records;
 
@@ -49,6 +51,12 @@ public class AddressBook implements IAddressBook {
     @Override
     public List<Record> getRecords(Predicate<Record> predicate) {
         return records.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    public int getDiffInDaysBetweenBirths(Record r1, Record r2) {
+        return Math.abs(
+                Period.between(r1.getBirth(), r2.getBirth()).getDays()
+        );
     }
 
 }

@@ -4,6 +4,7 @@ import com.gmail.tlachy.gumtree.model.Record;
 import com.gmail.tlachy.gumtree.model.enums.Gender;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -22,6 +23,8 @@ public interface IAddressBook {
     List<Record> getRecords(Predicate<Record> predicate);
 
     List<Record> getRecords(Predicate<Record> predicate, Comparator<Record> comparator);
+
+    int getDiffInDaysBetweenBirths(Record r1, Record r2);
 
     default Function<String, Record> mapToRecord() {
         return
