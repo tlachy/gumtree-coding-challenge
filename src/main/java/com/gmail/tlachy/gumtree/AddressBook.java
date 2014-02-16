@@ -7,15 +7,15 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 
 
 public class AddressBook implements IAddressBook {
 
-    public static final String CSV_SEPARATOR = ",";
     private final List<Record> records;
 
 
@@ -26,7 +26,7 @@ public class AddressBook implements IAddressBook {
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         records = br.lines()
-                .map(mapToRecord)
+                .map(mapToRecord())
                 .collect(Collectors.toList());
     }
 
@@ -36,16 +36,19 @@ public class AddressBook implements IAddressBook {
         return records;
     }
 
+    @Override
+    public List<Record> getRecords(Predicate<Record> predicate, Comparator<Record> comparator) {
+        return records.stream().filter(predicate).sorted(comparator).collect(Collectors.toList());
+    }
 
+    @Override
+    public List<Record> getRecords(Comparator<Record> comparator) {
+        return records.stream().sorted(comparator).collect(Collectors.toList());
+    }
 
+    @Override
+    public List<Record> getRecords(Predicate<Record> predicate) {
+        return records.stream().filter(predicate).collect(Collectors.toList());
+    }
 
-
-
-    private static Function<String, Record> mapToRecord = (line) -> {
-        String[] p = line.split(CSV_SEPARATOR);
-
-        return new Record(p[0].trim(),
-                Gender.valueOf(p[1].trim()),
-                LocalDate.parse(p[2].trim(), Record.DATE_TIME_FORMATTER));
-    };
 }
