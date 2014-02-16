@@ -2,16 +2,24 @@ package com.gmail.tlachy.gumtree.model;
 
 import com.gmail.tlachy.gumtree.model.enums.Gender;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
-/**
- * Created by tlachac on 2/16/14.
- */
+
 public class Record {
+
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(("dd/MM/yy"));
 
     private String name;
     private Gender gender;
     private LocalDate birth;
+
+    public Record(String name, Gender gender, LocalDate birth) {
+        this.name = name;
+        this.gender = gender;
+        this.birth = birth;
+    }
+
 
     @Override
     public boolean equals(Object o) {
